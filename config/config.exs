@@ -12,7 +12,7 @@ config :countdown,
 # Configures the endpoint
 config :countdown, CountdownWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "TpkGWYNspuReugoVyBPNzGxhbb+FrgJ3zye3HS6hJyo2qrxjaQwtyKP/lUtv4KOj",
+  secret_key_base: "TpkGWYNspuReugoVyBPNzGxhbbFrgJ3zye3HS6hJyo2qrxjaQwtyKP/lUtv4KOj",
   render_errors: [view: CountdownWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Countdown.PubSub,
            adapter: Phoenix.PubSub.PG2]
@@ -25,3 +25,15 @@ config :logger, :console,
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
+
+# Configures Ueberauth
+config :ueberauth, Ueberauth,
+  providers: [
+    auth0: { Ueberauth.Strategy.Auth0, [] },
+  ]
+
+# Configures Ueberauth's Auth0 auth provider
+config :ueberauth, Ueberauth.Strategy.Auth0.OAuth,
+  domain: System.get_env("AUTH0_DOMAIN"),
+  client_id: System.get_env("AUTH0_CLIENT_ID"),
+  client_secret: System.get_env("AUTH0_CLIENT_SECRET")
